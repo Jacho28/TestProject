@@ -1,20 +1,40 @@
+import { Text, Image } from 'react-native';
+import useFetch from './src/hooks/useFetch';
+import Card from './src/components/Card';
+import { useState } from 'react';
+import TabNavigator from './src/navigation/TabNavigator';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+  const {data, error, isLoading, refetch} = useFetch('character');
+  const [selectedId, setSelectedId] = useState(null);
+  //const { id, name, status, species, type, gender, location, image } = data;
+  //console.log(location);
+  //console.log(data);
+
+  const renderItem = ({ item }) => {
+    // console.log(item);
+    return(
+      <Card style={styles.card}>
+        <Image 
+          src={item.image} 
+          style={styles.image}
+        />
+        <Text>{item.name}</Text>
+      </Card>
+    );
+  };
+
+  const onRefresh = () => {
+
+  };
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <StatusBar translucent={false} style='light'/>
+      <TabNavigator />
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
