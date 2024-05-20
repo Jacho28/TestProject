@@ -2,22 +2,12 @@ import { StyleSheet, Text, View, Image, FlatList} from 'react-native';
 import { useState } from 'react';
 import useFetch from "../hooks/useFetch";
 import Card from "./Card";
+import useOllama from '../hooks/useOllama';
 
-export default function ContentList ({ endpoint }) {
+export default function ContentList ({ endpoint, renderItem }) {
   const {data, error, isLoading, refetch} = useFetch(endpoint);
+  //useOllama();
   const [selectedId, setSelectedId] = useState(null);
-
-	const renderItem = ({ item }) => {
-    return(
-      <Card style={styles.card}>
-        <Image 
-          src={item.image} 
-          style={styles.image}
-        />
-        <Text>{item.name}</Text>
-      </Card>
-    );
-  };
 
   const onRefresh = () => {
 
